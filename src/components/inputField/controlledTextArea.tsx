@@ -1,5 +1,6 @@
 import { useController, ValidationRule } from 'react-hook-form'
 import { ControlledInputProps } from './controlledInputField';
+import { useEffect } from 'react';
 
 type TextAreaComponentProps = {
     title?: string;
@@ -35,9 +36,12 @@ export const ControlledTextArea = ({
         disabled,
     })
 
+    useEffect(()=>{
+        console.log(error)
+    },[error])
     return (
-        <div className={`relative ${height ? height : ''} mt-3 mb-3 w-[100%] p-1`}>
-            {title ? <h2 className="absolute -top-4 left-0">{title}</h2> : null}
+        <div className={`relative ${height ? height : ''} mt-3 mb-3 w-[100%] pt-0.5`}>
+            {title ? <h2 className="absolute -top-5 left-0">{title}</h2> : null}
             <textarea
                 name={name}
                 value={value}
@@ -50,7 +54,7 @@ export const ControlledTextArea = ({
                 key={keyName}
             />
             {error && (
-                <span className="absolute text-red-500 text-sm">{error.message}</span>
+                <span className="absolute top-32 left-0 text-red-500 text-sm">{error.message}</span>
             )}
         </div>
     )

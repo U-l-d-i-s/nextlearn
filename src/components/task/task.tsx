@@ -15,7 +15,6 @@ type TaskInterface = {
 
 type TaskProps = {
     setSelectedTasksHandler: (tasks: SelectedTaskType) => void
-    setTaskDetailsPage: (taskDetails: TaskType) => void
     enableSelect: boolean
 } & TaskInterface
 
@@ -25,7 +24,6 @@ export const Task = ({
     createdDate,
     id,
     setSelectedTasksHandler,
-    setTaskDetailsPage,
     enableSelect,
 }: TaskProps) => {
     const [checked, setChecked] = useState<boolean>(false)
@@ -70,11 +68,8 @@ export const Task = ({
             ) : null}
 
             <Link
-                href="/taskDetails"
-                className="absolute h-[100%] w-[100%] left-10 z-10"
-                onClick={() =>
-                    setTaskDetailsPage({ title, description, createdDate, id })
-                }
+                href={`/taskDetails/${id}`}
+                className="absolute h-[100%]  left-10 right-0 z-10"
             />
             <ControlledInputField name="id" control={control} disabled={true} />
             <ControlledInputField

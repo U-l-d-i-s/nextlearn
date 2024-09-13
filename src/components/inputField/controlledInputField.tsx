@@ -7,7 +7,9 @@ import {
     ValidationRule,
 } from 'react-hook-form'
 
-export type ControlledInputProps<TFieldValues extends FieldValues = FieldValues> = {
+export type ControlledInputProps<
+    TFieldValues extends FieldValues = FieldValues,
+> = {
     title?: string
     link?: string
     placeholder?: string
@@ -54,8 +56,12 @@ export const ControlledInputField = ({
     })
 
     return (
-        <div className={`relative ${height ? height : ''} mt-3 mb-3 w-[100%] h-fit flex-column justify`}>
-            {title ? <h2 className="absolute bottom-10 left-0">{title}</h2> : null}
+        <div
+            className={`relative ${height ? height : ''} mt-5 mb-5 w-[100%] h-fit flex-column justify`}
+        >
+            {title ? (
+                <h2 className="absolute bottom-10 left-0">{title}</h2>
+            ) : null}
             <input
                 title="hi"
                 name={name}
@@ -70,7 +76,7 @@ export const ControlledInputField = ({
                 key={keyName}
             />
             {error && (
-                <span className="absolute top-12 left-0 text-red-500 text-sm">
+                <span className="absolute top-10 left-0 text-red-500 text-sm">
                     {error.message}
                 </span>
             )}

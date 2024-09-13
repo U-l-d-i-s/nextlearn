@@ -1,22 +1,18 @@
-'use client'
-
 import { TasksType, SelectedTaskType, TaskType } from '@/types/tasks'
 import { Task } from './task'
+import { useAppContext } from '@/app/providers'
 
 interface TaskListProps {
     enableSelect: boolean
-    tasksData: TasksType
-    setSelectedTasksHandler: (task: SelectedTaskType) => void
-    setTaskDetailsPage: (taskDetails: TaskType) => void
 }
 
 export const TaskList = ({
-    tasksData,
-    setSelectedTasksHandler,
-    setTaskDetailsPage,
     enableSelect,
 }: TaskListProps) => {
-    if (!tasksData.length) {
+    const { getTasks, setSelectedTasksHandler } = useAppContext()
+
+    const tasks = getTasks()
+    if (!tasks) {
         return <p>No Tasks Added...</p>
     }   
 
@@ -39,7 +35,7 @@ export const TaskList = ({
                     <h3>Creation Date</h3>
                 </div>
             </div>
-            {tasksData.map((task) => (
+            {tasks.map((task) => (
                 <Task
                     enableSelect={enableSelect}
                     setSelectedTasksHandler={setSelectedTasksHandler}
@@ -48,7 +44,6 @@ export const TaskList = ({
                     createdDate={task.createdDate}
                     id={task.id}
                     key={task.id}
-                    setTaskDetailsPage={setTaskDetailsPage}
                 />
             ))}
         </div>

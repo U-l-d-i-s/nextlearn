@@ -1,21 +1,11 @@
-'use Client'
-
-import {
-    TasksType,
-    TaskType,
-} from '@/types/tasks'
 import { ReadOnlyTask } from './readOnlyTask'
+import { useAppContext } from '@/app/providers'
 
-type ReadOnlyTaskListProps = {
-    tasksData: TasksType
-    setTaskDetailsPage: (taskDetails: TaskType) => void
-}
+export const ReadOnlyTaskList = () => {
+    const { getTasks } = useAppContext()
 
-export const ReadOnlyTaskList = ({
-    tasksData,
-    setTaskDetailsPage,
-}: ReadOnlyTaskListProps) => {
-    if (!tasksData.length) {
+    const tasksData = getTasks()
+    if (!tasksData) {
         return <p>No Tasks Added...</p>
     }
 
@@ -42,7 +32,6 @@ export const ReadOnlyTaskList = ({
                     createdDate={task.createdDate}
                     id={task.id}
                     key={task.id}
-                    setTaskDetailsPage={setTaskDetailsPage}
                 />
             ))}
         </div>

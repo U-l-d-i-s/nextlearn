@@ -12,7 +12,7 @@ export const Modal = ({ children }: ModalProps) => {
 
     return (
         <div className="fixed inset-0 inline-flex items-center justify-center bg-black bg-opacity-50 z-30 ">
-            <div className="bg-white rounded-lg shadow-lg p-6 relative h-fit">
+            <div className="bg-white rounded-lg shadow-lg p-6 relative w-2/3 h-fit">
                 <Button
                     id='modalClose'
                     label="Close"

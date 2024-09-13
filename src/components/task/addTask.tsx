@@ -1,18 +1,19 @@
 'use client'
 
-import { AddTaskType } from '@/types/tasks'
 import { useForm, FieldValues } from 'react-hook-form'
 import { ControlledInputField } from '../inputField/controlledInputField'
 import { Button } from '../button/button'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { useRouter } from 'next/navigation'
+import { useAppContext } from '@/app/providers'
+import { ControlledTextArea } from '../inputField/controlledTextArea'
 
 interface AddTaskProps {
     isModal: boolean
-    addTask: (params: AddTaskType) => void
-    router?: AppRouterInstance
 }
 
-export const AddTask = ({ isModal, addTask, router }: AddTaskProps) => {
+export const AddTask = ({ isModal }: AddTaskProps) => {
+    const { addTask } = useAppContext()
+    const router = useRouter()
     const { control, handleSubmit } = useForm<FieldValues>({})
 
     const onSubmit = handleSubmit((data) => {
@@ -21,6 +22,7 @@ export const AddTask = ({ isModal, addTask, router }: AddTaskProps) => {
         addTask({ title, description })
         if (!router) return
 
+        // Check if this is modal, then go to correct route
         if (isModal === true) {
             router.back()
         } else {
@@ -32,7 +34,7 @@ export const AddTask = ({ isModal, addTask, router }: AddTaskProps) => {
         <form
             key="addTaskForm"
             onSubmit={onSubmit}
-            className="flex-column justify-items-end space-x-[2px] rounded-[4px]"
+            className="flex flex-col rounded-[4px] h-[100%] "
         >
             <ControlledInputField
                 title="Task Title"
@@ -46,7 +48,7 @@ export const AddTask = ({ isModal, addTask, router }: AddTaskProps) => {
                     },
                 }}
             />
-            <ControlledInputField
+            <ControlledTextArea
                 title="Description"
                 name="description"
                 control={control}
@@ -57,6 +59,7 @@ export const AddTask = ({ isModal, addTask, router }: AddTaskProps) => {
                         message: 'Add Description!',
                     },
                 }}
+                height="h-32"
             />
             <Button
                 id="save"

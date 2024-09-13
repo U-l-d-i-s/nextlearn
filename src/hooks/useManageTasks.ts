@@ -8,15 +8,15 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { taskJson } from '../taskData/taskJsonMock'
 
+// Hook to manage Seleceted / Deleted / Added / Edited (TBD) tasks
 export const useManageTasks = () => {
     const [tasksData, setTaskData] = useState<TasksType>(taskJson)
-    const [taskDetails, setTaskDetails] = useState<TaskType | undefined>()
     const [selectedTasks, setSelectedTasks] = useState<SelectedTaskType[]>([])
 
     const addTask = ({ title, description }: AddTaskType): void => {
         const id: string = uuidv4()
         const createdDate = Date.now().toString()
-        console.log(title, description)
+
         const fullTask: TaskType = {
             id,
             title,
@@ -25,6 +25,15 @@ export const useManageTasks = () => {
         }
         setTaskData([...tasksData, fullTask])
     }
+
+    const getTask = (id: string): TaskType | undefined => {
+        return tasksData.find(task => task.id === id)
+    }
+
+    const getTasks = ():TasksType => {
+        return tasksData
+    }
+
     const deleteTask = (): void => {
         setTaskData([
             ...tasksData.filter(
@@ -36,8 +45,6 @@ export const useManageTasks = () => {
         ])
         setSelectedTasks([])
     }
-
-    const editTask = (task: TaskType): void => {}
 
     const setSelectedTasksHandler = (task: SelectedTaskType): void => {
         const taskSelected = selectedTasks.some(
@@ -55,18 +62,17 @@ export const useManageTasks = () => {
         }
     }
 
-    const setTaskDetailsPage = (taskDetails: TaskType) => {
-        setTaskDetails(taskDetails)
-    }
+    // needs to be finished
+    const editTask = (task: TaskType): void => {}
 
     return {
-        setTaskDetailsPage,
-        taskDetails,
         setSelectedTasksHandler,
         selectedTasks,
         addTask,
         tasksData,
         deleteTask,
         editTask,
+        getTask,
+        getTasks,
     }
 }
